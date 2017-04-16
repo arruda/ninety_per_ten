@@ -3,11 +3,8 @@ from datetime import datetime
 
 from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.gridlayout import GridLayout
 
-from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from npt_events import Event, EVALUATION_POSITIVE, EVALUATION_NEGATIVE
@@ -36,11 +33,10 @@ class BasicScreen(Screen):
 
     def _build_top_box(self):
         top_box = BoxLayout(orientation='vertical')
-        self.rate_label = Label(text="0/0", font_size=50, color=[0, 0, 0, 1], size_hint=(1, 1))
-
+        self.positive_label = Label(text="0%", font_size=50, color=[0, 0, 0, 1], size_hint=(1, 1))
         self.total_label = Label(font_size=30, color=[0, 0, 0, 1], size_hint=(1, 1))
 
-        top_box.add_widget(self.rate_label)
+        top_box.add_widget(self.positive_label)
         top_box.add_widget(self.total_label)
         return top_box
 
@@ -50,11 +46,11 @@ class BasicScreen(Screen):
         main_box.add_widget(self._build_botton_grid())
         return main_box
 
-    def update_rate_label(self):
+    def update_positive_label(self):
         if not self.events:
             return
-
-        self.rate_label.text = "{}/{}".format(*Event.get_rate(self.events))
+        positive_perc = Event.get_rate(self.events)[0]
+        self.positive_label.text = "{}%".format(positive_perc)
 
     def update_total_label(self):
         self.total_label.text = "Total Entries: {}".format(len(self.events))
@@ -64,7 +60,7 @@ class BasicScreen(Screen):
         self.update_screen_values()
 
     def update_screen_values(self):
-        self.update_rate_label()
+        self.update_positive_label()
         self.update_total_label()
 
     def handle_positive_button(self, button):
