@@ -1,4 +1,5 @@
 # Ninety Per Ten
+Project requested by @annanda to help keep track of her food habits.
 
 # Install
 Prepare venv:
@@ -17,14 +18,23 @@ Then, install everything:
 $ pipenv install
 ```
 
-### Building app
+# Building app
 **OBS:** Might be necessary to start adb server as root before, ex:
-`sudo /home/myuser/.buildozer/android/platform/android-sdk-20/platform-tools/adb start-server`
 
-`buildozer android debug deploy`
+```shell
+$ sudo /home/myuser/.buildozer/android/platform/android-sdk-20/platform-tools/adb start-server
+```
+Run:
 
-## Publishing
-`buildozer android release`
+```shell
+$ buildozer android debug deploy
+```
+
+# Publishing
+Run:
+```shell
+$ buildozer android release
+```
 
 # LICENSE
 Software under MIT license. See LICENSE file for more details.
