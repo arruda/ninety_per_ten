@@ -28,7 +28,6 @@ class NinetyPerTenApp(App):
 
     def build(self):
         self.store = JsonStore(os.path.join(self.user_data_dir, 'ninetyperten.json'))
-
         sm = NinetyPerTenScreenManager(self.store)
         basic_screen = BasicScreen(
             name='Main Screen',

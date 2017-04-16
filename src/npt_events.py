@@ -33,6 +33,12 @@ class Event(object):
         return events
 
     @classmethod
+    def reset_store(cls, store):
+        for key in store:
+            store.delete(key)
+        return []
+
+    @classmethod
     def get_rate(cls, events):
         total_events = len(events)
         positives = len(filter(lambda e: e.evaluation, events))
