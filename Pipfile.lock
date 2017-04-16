@@ -1,0 +1,33 @@
+{
+    "default": {
+        "Cython": {
+            "version": "==0.25.2",
+            "hash": "sha256:43a9eafa95b021229550b70de6bfc3cce2e198513dcc8ffd55f4916b50d25aea"
+        },
+        "requests": {
+            "version": "==2.13.0",
+            "hash": "sha256:1a720e8862a41aa22e339373b526f508ef0c8988baf48b84d3fc891a8e237efb"
+        },
+        "Kivy-Garden": {
+            "version": "==0.1.4",
+            "hash": "sha256:c256f42788421273a08fbb0a228f0fb0e80dd86b629fb8c0920507f645be6c72"
+        },
+        "Kivy": {
+            "version": "==1.9.1",
+            "hash": "sha256:29bc45be34c26a8acb1dafdd329145f997a473be344cd052659f821f6478637e"
+        }
+    },
+    "develop": {},
+    "_meta": {
+        "sources": [
+            {
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ],
+        "requires": {},
+        "hash": {
+            "sha256": "eb70b757b7ef8dc8ee331e27a59b908caa0156904b89d42a75050183962d1d71"
+        }
+    }
+}
