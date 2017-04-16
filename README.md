@@ -1,4 +1,4 @@
-# FoodStats
+# Ninety Per Ten
 
 # Install
 Prepare venv:
@@ -9,7 +9,7 @@ $ pipenv --two
 Cython has to be installed before everything, or else installation will break.
 
 ```shell
-$ pipenv install Cython
+$ pipenv install Cython==0.25.2
 ```
 
 Then, install everything:
@@ -19,4 +19,4 @@ $ pipenv install
 
 
 # LICENSE
-
+Software under MIT license. See LICENSE file for more details.
