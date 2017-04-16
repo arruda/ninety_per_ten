@@ -34,7 +34,11 @@ class BasicScreen(Screen):
 
     def _build_top_box(self):
         top_box = BoxLayout(orientation='vertical')
-        self.total_label = Label(text="100/0", font_size=50, color=[0, 0, 0, 1], size_hint=(1, 1))
+        self.rate_label = Label(text="0/0", font_size=50, color=[0, 0, 0, 1], size_hint=(1, 1))
+
+        self.total_label = Label(font_size=30, color=[0, 0, 0, 1], size_hint=(1, 1))
+
+        top_box.add_widget(self.rate_label)
         top_box.add_widget(self.total_label)
         return top_box
 
@@ -44,25 +48,29 @@ class BasicScreen(Screen):
         main_box.add_widget(self._build_botton_grid())
         return main_box
 
-    def update_total_label(self):
+    def update_rate_label(self):
         if not self.events:
             return
 
-        self.total_label.text = "{}/{}".format(
-            Event.get_rate(self.events)
-        )
+        self.rate_label.text = "{}/{}".format(*Event.get_rate(self.events))
+
+    def update_total_label(self):
+        self.total_label.text = "Total Entries: {}".format(len(self.events))
 
     def on_pre_enter(self):
+        self.update_screen_values()
+
+    def update_screen_values(self):
+        self.update_rate_label()
         self.update_total_label()
 
     def handle_positive_button(self, button):
-        import pdb; pdb.set_trace()
         self.add_new_event(EVALUATION_POSITIVE)
-        self.update_total_label()
+        self.update_screen_values()
 
     def handle_negative_button(self, button):
         self.add_new_event(EVALUATION_NEGATIVE)
-        self.update_total_label()
+        self.update_screen_values()
 
     def add_new_event(self, evaluation):
         self.events.append(
