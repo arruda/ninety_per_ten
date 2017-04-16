@@ -8,6 +8,10 @@
             "version": "==0.25.2",
             "hash": "sha256:43a9eafa95b021229550b70de6bfc3cce2e198513dcc8ffd55f4916b50d25aea"
         },
+        "six": {
+            "version": "==1.10.0",
+            "hash": "sha256:0ff78c403d9bccf5a425a6d31a12aa6b47f1c21ca4dc2573a7e2f32a97335eb1"
+        },
         "pexpect": {
             "version": "==4.2.1",
             "hash": "sha256:f853b52afaf3b064d29854771e2db509ef80392509bde2dd7a6ecf2dfc3f0018"
@@ -15,6 +19,10 @@
         "Kivy": {
             "version": "==1.9.1",
             "hash": "sha256:29bc45be34c26a8acb1dafdd329145f997a473be344cd052659f821f6478637e"
+        },
+        "python-dateutil": {
+            "version": "==2.6.0",
+            "hash": "sha256:537bf2a8f8ce6f6862ad705cd68f9e405c0b5db014aa40fa29eab4335d4b1716"
         },
         "requests": {
             "version": "==2.13.0",
@@ -128,7 +136,7 @@
         ],
         "requires": {},
         "hash": {
-            "sha256": "cd5b6f2b5a1e75a0617caa98c3b12d136d1807acfedccb777e52ba1cc6497ceb"
+            "sha256": "629ccdceadbb528352b93fa818020973bb952fb012870dc169b85e2e741ec268"
         }
     }
 }
