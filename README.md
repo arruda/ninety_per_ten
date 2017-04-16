@@ -17,6 +17,14 @@ Then, install everything:
 $ pipenv install
 ```
 
+### Building app
+**OBS:** Might be necessary to start adb server as root before, ex:
+`sudo /home/myuser/.buildozer/android/platform/android-sdk-20/platform-tools/adb start-server`
+
+`buildozer android debug deploy`
+
+## Publishing
+`buildozer android release`
 
 # LICENSE
 Software under MIT license. See LICENSE file for more details.
