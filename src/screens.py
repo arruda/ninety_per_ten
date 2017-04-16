@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
+
 from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
@@ -58,6 +60,7 @@ class BasicScreen(Screen):
         self.total_label.text = "Total Entries: {}".format(len(self.events))
 
     def on_pre_enter(self):
+        self.events = Event.get_events(self.manager.store)
         self.update_screen_values()
 
     def update_screen_values(self):
@@ -73,6 +76,8 @@ class BasicScreen(Screen):
         self.update_screen_values()
 
     def add_new_event(self, evaluation):
+        new_event = Event(date=datetime.now(), evaluation=evaluation)
+        new_event.save(self.manager.store)
         self.events.append(
-            Event(evaluation=evaluation)
+            new_event
         )
