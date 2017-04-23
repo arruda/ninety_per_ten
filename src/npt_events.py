@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from dateutil.parser import parse as date_parse
 
 EVALUATION_POSITIVE = True
@@ -7,7 +8,7 @@ EVALUATION_NEGATIVE = False
 
 class Event(object):
     """An event"""
-    def __init__(self, date, evaluation=True):
+    def __init__(self, date, evaluation=EVALUATION_POSITIVE):
         super(Event, self).__init__()
         self.date = date
         self.iso_date = date.isoformat()
@@ -15,6 +16,9 @@ class Event(object):
 
     def __unicode__(self):
         return "{}: {}".format(self.iso_date, self.evaluation)
+
+    def __str__(self):
+        return self.__unicode__()
 
     def save(self, store):
         print "saving %s" % unicode(self)
@@ -45,3 +49,12 @@ class Event(object):
         positive_perc = (positives * 100) / total_events
         negative_perc = 100 - positive_perc
         return positive_perc, negative_perc
+
+    @classmethod
+    def filter(cls, store):
+        events = cls.get_events(store)
+        today_events = []
+        for event in events:
+            if event.date.date() == datetime.now().date():
+                today_events.append(event)
+        return today_events
