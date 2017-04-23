@@ -53,7 +53,7 @@ class BasicScreen(Screen):
         reset_button.bind(on_release=self.handle_reset_button)
         filter_box.add_widget(reset_button)
 
-        for filter_type in FILTERS:
+        for filter_type in FILTERS.keys():
             filter_button = Button(
                 text=filter_type,
                 font_size=30,
