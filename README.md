@@ -19,7 +19,7 @@ $ pipenv install
 ```
 
 # Building app
-**OBS:** Might be necessary to start adb server as root before, ex:
+**PS:** Might be necessary to start adb server as root before, e.g.:
 
 ```shell
 $ sudo /home/myuser/.buildozer/android/platform/android-sdk-20/platform-tools/adb start-server
