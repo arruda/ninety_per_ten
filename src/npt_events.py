@@ -1,9 +1,19 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.parser import parse as date_parse
 
 EVALUATION_POSITIVE = True
 EVALUATION_NEGATIVE = False
+
+THIS_WEEK_FILTER = 'This Week'
+TODAY_FILTER = 'Today'
+ALL_FILTER = 'All'
+
+FILTERS = {
+    THIS_WEEK_FILTER: 'get_num_days_week',
+    TODAY_FILTER: 'get_num_days_today',
+    ALL_FILTER: ''
+}
 
 
 class Event(object):
@@ -51,10 +61,31 @@ class Event(object):
         return positive_perc, negative_perc
 
     @classmethod
-    def filter(cls, store):
+    def filter(cls, store, filter_by):
+        get_num_days_method = getattr(cls, FILTERS.get(filter_by), lambda: None)
+        num_days = get_num_days_method()
+        events = cls.filter_by_num_days(store, num_days)
+        return events
+
+    @classmethod
+    def get_num_days_week(cls):
+        return 7
+
+    @classmethod
+    def get_num_days_today(cls):
+        return 0
+
+    @classmethod
+    def filter_by_num_days(cls, store, num_days):
         events = cls.get_events(store)
-        today_events = []
+        if num_days is None:
+            return events
+
+        today = datetime.now().date()
+        initial_date = today - timedelta(days=num_days)
+        filtered_events = []
         for event in events:
-            if event.date.date() == datetime.now().date():
-                today_events.append(event)
-        return today_events
+            delta = event.date.date() - initial_date
+            if delta.days <= num_days and delta.days >= 0:
+                filtered_events.append(event)
+        return filtered_events
