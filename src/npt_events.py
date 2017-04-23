@@ -8,10 +8,10 @@ EVALUATION_NEGATIVE = False
 THIS_WEEK_FILTER = 'This Week'
 TODAY_FILTER = 'Today'
 
-FILTERS = [
-    THIS_WEEK_FILTER,
-    TODAY_FILTER
-]
+FILTERS = {
+    THIS_WEEK_FILTER: 'filter_by_week',
+    TODAY_FILTER: 'filter_by_day'
+}
 
 
 class Event(object):
@@ -60,6 +60,21 @@ class Event(object):
 
     @classmethod
     def filter(cls, store, filter_by):
+        filter_method = getattr(cls, FILTERS.get(filter_by))
+        events = filter_method(cls, store)
+        return events
+
+    @classmethod
+    def filter_by_day(cls, store):
+        events = cls.get_events(store)
+        today_events = []
+        for event in events:
+            if event.date.date() == datetime.now().date():
+                today_events.append(event)
+        return today_events
+
+    @classmethod
+    def filter_by_week(cls, store):
         events = cls.get_events(store)
         today_events = []
         for event in events:
