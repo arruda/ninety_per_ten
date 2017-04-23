@@ -66,6 +66,7 @@ class BasicScreen(Screen):
             size=(100, 100)
         )
         reset_button.bind(on_release=self.handle_reset_button)
+        filter_button.bind(on_release=self.handle_filter_button)
         menu_layout.add_widget(reset_button)
         menu_layout.add_widget(filter_button)
         return menu_layout
@@ -127,3 +128,10 @@ class BasicScreen(Screen):
             self.reset_count = 0
             self.events = Event.reset_store(self.manager.store)
         self.update_screen_values()
+
+    def handle_filter_button(self, button):
+        filtered_events = Event.filter(self.manager.store)
+        self.events = filtered_events
+        self.update_screen_values()
+        for event in self.events:
+            print event
