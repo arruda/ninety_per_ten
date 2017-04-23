@@ -7,10 +7,12 @@ EVALUATION_NEGATIVE = False
 
 THIS_WEEK_FILTER = 'This Week'
 TODAY_FILTER = 'Today'
+ALL_FILTER = 'All'
 
 FILTERS = {
     THIS_WEEK_FILTER: 'filter_by_week',
-    TODAY_FILTER: 'filter_by_day'
+    TODAY_FILTER: 'filter_by_day',
+    ALL_FILTER: 'get_events'
 }
 
 
