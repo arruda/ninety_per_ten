@@ -8,7 +8,7 @@ from kivy.uix.relativelayout import RelativeLayout
 
 from kivy.uix.label import Label
 from kivy.uix.button import Button
-from npt_events import Event, EVALUATION_POSITIVE, EVALUATION_NEGATIVE
+from npt_events import Event, EVALUATION_POSITIVE, EVALUATION_NEGATIVE, FILTERS
 
 
 class BasicScreen(Screen):
@@ -50,22 +50,18 @@ class BasicScreen(Screen):
             font_size=30,
             size_hint=(1, 1),
         )
-        filter_today_button = Button(
-            text="Today",
-            font_size=30,
-            size_hint=(1, 1),
-        )
-        filter_week_button = Button(
-            text="This Week",
-            font_size=30,
-            size_hint=(1, 1),
-        )
         reset_button.bind(on_release=self.handle_reset_button)
-        filter_today_button.bind(on_release=self.handle_filter_button)
-        filter_week_button.bind(on_release=self.handle_filter_button)
         filter_box.add_widget(reset_button)
-        filter_box.add_widget(filter_today_button)
-        filter_box.add_widget(filter_week_button)
+
+        for filter_type in FILTERS:
+            filter_button = Button(
+                text=filter_type,
+                font_size=30,
+                size_hint=(1, 1),
+            )
+            filter_button.bind(on_release=self.handle_filter_button)
+            filter_box.add_widget(filter_button)
+
         return filter_box
 
     def _menu_layout(self):
@@ -138,7 +134,8 @@ class BasicScreen(Screen):
         self.update_screen_values()
 
     def handle_filter_button(self, button):
-        filtered_events = Event.filter(self.manager.store)
+        filter_by = button.text
+        filtered_events = Event.filter(self.manager.store, filter_by)
         self.events = filtered_events
         self.update_screen_values()
         for event in self.events:

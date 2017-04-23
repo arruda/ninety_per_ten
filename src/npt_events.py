@@ -5,6 +5,14 @@ from dateutil.parser import parse as date_parse
 EVALUATION_POSITIVE = True
 EVALUATION_NEGATIVE = False
 
+THIS_WEEK_FILTER = 'This Week'
+TODAY_FILTER = 'Today'
+
+FILTERS = [
+    THIS_WEEK_FILTER,
+    TODAY_FILTER
+]
+
 
 class Event(object):
     """An event"""
@@ -51,7 +59,7 @@ class Event(object):
         return positive_perc, negative_perc
 
     @classmethod
-    def filter(cls, store):
+    def filter(cls, store, filter_by):
         events = cls.get_events(store)
         today_events = []
         for event in events:
