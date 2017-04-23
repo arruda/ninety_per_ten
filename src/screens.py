@@ -20,8 +20,8 @@ class BasicScreen(Screen):
 
         self.add_widget(self._build_main_box())
 
-    def _build_botton_grid(self):
-        botton_grid = BoxLayout(orientation='horizontal')
+    def _build_evaluation_box(self):
+        evaluation_box = BoxLayout(orientation='horizontal')
         positive_button = Button(
             text="Positive",
             font_size=30,
@@ -36,9 +36,17 @@ class BasicScreen(Screen):
         )
         negative_button.bind(on_release=self.handle_negative_button)
 
-        botton_grid.add_widget(positive_button)
-        botton_grid.add_widget(negative_button)
-        return botton_grid
+        evaluation_box.add_widget(positive_button)
+        evaluation_box.add_widget(negative_button)
+        return evaluation_box
+
+    def _build_botton_box(self):
+        botton_box = BoxLayout(orientation='vertical', spacing=10)
+        self.total_label = Label(font_size=30, color=[0, 0, 0, 1], size_hint=(1, 1))
+
+        botton_box.add_widget(self.total_label)
+        botton_box.add_widget(self._build_evaluation_box())
+        return botton_box
 
     def _filter_layout(self):
         filter_box = BoxLayout(orientation='vertical')
@@ -74,17 +82,17 @@ class BasicScreen(Screen):
         top_box = BoxLayout(orientation='vertical')
 
         self.positive_label = Label(text="0%", font_size=100, color=[0, 0, 0, 1], size_hint=(1, 1))
-        self.total_label = Label(font_size=30, color=[0, 0, 0, 1], size_hint=(1, 1))
+        # self.total_label = Label(font_size=30, color=[0, 0, 0, 1], size_hint=(1, 1))
 
         top_box.add_widget(self._menu_layout())
         top_box.add_widget(self.positive_label)
-        top_box.add_widget(self.total_label)
+        # top_box.add_widget(self.total_label)
         return top_box
 
     def _build_main_box(self):
         main_box = BoxLayout(orientation='vertical')
         main_box.add_widget(self._build_top_box())
-        main_box.add_widget(self._build_botton_grid())
+        main_box.add_widget(self._build_botton_box())
         return main_box
 
     def update_positive_label(self):
