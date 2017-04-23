@@ -10,9 +10,9 @@ TODAY_FILTER = 'Today'
 ALL_FILTER = 'All'
 
 FILTERS = {
-    THIS_WEEK_FILTER: 'filter_by_week',
-    TODAY_FILTER: 'filter_by_day',
-    ALL_FILTER: 'get_events'
+    THIS_WEEK_FILTER: 'get_num_days_week',
+    TODAY_FILTER: 'get_num_days_today',
+    ALL_FILTER: ''
 }
 
 
@@ -62,9 +62,18 @@ class Event(object):
 
     @classmethod
     def filter(cls, store, filter_by):
-        filter_method = getattr(cls, FILTERS.get(filter_by))
-        events = filter_method(store)
+        get_num_days_method = getattr(cls, FILTERS.get(filter_by), lambda: None)
+        num_days = get_num_days_method()
+        events = cls.filter_by_period(store, num_days)
         return events
+
+    @classmethod
+    def get_num_days_week(cls):
+        return 7
+
+    @classmethod
+    def get_num_days_today(cls):
+        return 0
 
     @classmethod
     def filter_by_day(cls, store):
@@ -87,4 +96,19 @@ class Event(object):
             if delta.days <= num_days and delta.days >= 0:
                 filtered_events.append(event)
 
+        return filtered_events
+
+    @classmethod
+    def filter_by_period(cls, store, num_days):
+        events = cls.get_events(store)
+        if num_days is None:
+            return events
+
+        today = datetime.now().date()
+        initial_date = today - timedelta(days=num_days)
+        filtered_events = []
+        for event in events:
+            delta = event.date.date() - initial_date
+            if delta.days <= num_days and delta.days >= 0:
+                filtered_events.append(event)
         return filtered_events
