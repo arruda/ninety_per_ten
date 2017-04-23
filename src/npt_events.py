@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.parser import parse as date_parse
 
 EVALUATION_POSITIVE = True
@@ -78,8 +78,13 @@ class Event(object):
     @classmethod
     def filter_by_week(cls, store):
         events = cls.get_events(store)
-        today_events = []
+        today = datetime.now().date()
+        num_days = 7
+        initial_date = today - timedelta(days=num_days)
+        filtered_events = []
         for event in events:
-            if event.date.date() == datetime.now().date():
-                today_events.append(event)
-        return today_events
+            delta = event.date.date() - initial_date
+            if delta.days <= num_days and delta.days >= 0:
+                filtered_events.append(event)
+
+        return filtered_events
