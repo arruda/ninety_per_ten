@@ -58,8 +58,16 @@ class BasicScreen(Screen):
             size_hint=(None, None),
             size=(100, 100)
         )
+        filter_button = Button(
+            text="Filter",
+            font_size=30,
+            pos_hint={'right': 1, 'top': 0.5},
+            size_hint=(None, None),
+            size=(100, 100)
+        )
         reset_button.bind(on_release=self.handle_reset_button)
         menu_layout.add_widget(reset_button)
+        menu_layout.add_widget(filter_button)
         return menu_layout
 
     def _build_top_box(self):
