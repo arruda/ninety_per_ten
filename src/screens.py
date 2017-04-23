@@ -59,7 +59,7 @@ class BasicScreen(Screen):
             size=(100, 100)
         )
         filter_button = Button(
-            text="Filter",
+            text="Today",
             font_size=30,
             pos_hint={'right': 1, 'top': 0.5},
             size_hint=(None, None),
