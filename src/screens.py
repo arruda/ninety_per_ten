@@ -43,6 +43,31 @@ class BasicScreen(Screen):
         botton_grid.add_widget(negative_button)
         return botton_grid
 
+    def _filter_layout(self):
+        filter_box = BoxLayout(orientation='vertical')
+        reset_button = Button(
+            text="Reset",
+            font_size=30,
+            size_hint=(1, 1),
+        )
+        filter_today_button = Button(
+            text="Today",
+            font_size=30,
+            size_hint=(1, 1),
+        )
+        filter_week_button = Button(
+            text="This Week",
+            font_size=30,
+            size_hint=(1, 1),
+        )
+        reset_button.bind(on_release=self.handle_reset_button)
+        filter_today_button.bind(on_release=self.handle_filter_button)
+        filter_week_button.bind(on_release=self.handle_filter_button)
+        filter_box.add_widget(reset_button)
+        filter_box.add_widget(filter_today_button)
+        filter_box.add_widget(filter_week_button)
+        return filter_box
+
     def _menu_layout(self):
         menu_layout = RelativeLayout(
             size_hint=(None, None),
@@ -51,24 +76,7 @@ class BasicScreen(Screen):
         )
         # menu_layout.canvas.add(Color(1., 0, 0))
         # menu_layout.canvas.add(Rectangle(pos=(0, 0), size=menu_layout.size))
-        reset_button = Button(
-            text="Reset",
-            font_size=30,
-            pos_hint={'right': 1, 'top': 1},
-            size_hint=(None, None),
-            size=(100, 100)
-        )
-        filter_button = Button(
-            text="Today",
-            font_size=30,
-            pos_hint={'right': 1, 'top': 0.5},
-            size_hint=(None, None),
-            size=(100, 100)
-        )
-        reset_button.bind(on_release=self.handle_reset_button)
-        filter_button.bind(on_release=self.handle_filter_button)
-        menu_layout.add_widget(reset_button)
-        menu_layout.add_widget(filter_button)
+        menu_layout.add_widget(self._filter_layout())
         return menu_layout
 
     def _build_top_box(self):
