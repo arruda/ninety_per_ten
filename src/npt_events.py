@@ -64,7 +64,7 @@ class Event(object):
     def filter(cls, store, filter_by):
         get_num_days_method = getattr(cls, FILTERS.get(filter_by), lambda: None)
         num_days = get_num_days_method()
-        events = cls.filter_by_period(store, num_days)
+        events = cls.filter_by_num_days(store, num_days)
         return events
 
     @classmethod
@@ -76,30 +76,7 @@ class Event(object):
         return 0
 
     @classmethod
-    def filter_by_day(cls, store):
-        events = cls.get_events(store)
-        today_events = []
-        for event in events:
-            if event.date.date() == datetime.now().date():
-                today_events.append(event)
-        return today_events
-
-    @classmethod
-    def filter_by_week(cls, store):
-        events = cls.get_events(store)
-        today = datetime.now().date()
-        num_days = 7
-        initial_date = today - timedelta(days=num_days)
-        filtered_events = []
-        for event in events:
-            delta = event.date.date() - initial_date
-            if delta.days <= num_days and delta.days >= 0:
-                filtered_events.append(event)
-
-        return filtered_events
-
-    @classmethod
-    def filter_by_period(cls, store, num_days):
+    def filter_by_num_days(cls, store, num_days):
         events = cls.get_events(store)
         if num_days is None:
             return events
