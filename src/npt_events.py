@@ -61,7 +61,7 @@ class Event(object):
     @classmethod
     def filter(cls, store, filter_by):
         filter_method = getattr(cls, FILTERS.get(filter_by))
-        events = filter_method(cls, store)
+        events = filter_method(store)
         return events
 
     @classmethod
