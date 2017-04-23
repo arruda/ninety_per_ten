@@ -36,9 +36,6 @@ class BasicScreen(Screen):
         )
         negative_button.bind(on_release=self.handle_negative_button)
 
-        # botton_grid.canvas.add(Color(1., 1., 0))
-        # botton_grid.canvas.add(Rectangle(pos=botton_grid.pos, size=botton_grid.size))
-
         botton_grid.add_widget(positive_button)
         botton_grid.add_widget(negative_button)
         return botton_grid
@@ -70,8 +67,6 @@ class BasicScreen(Screen):
             size=(200, 200),
             pos_hint={'right': 1, 'top': 1},
         )
-        # menu_layout.canvas.add(Color(1., 0, 0))
-        # menu_layout.canvas.add(Rectangle(pos=(0, 0), size=menu_layout.size))
         menu_layout.add_widget(self._filter_layout())
         return menu_layout
 
@@ -138,5 +133,3 @@ class BasicScreen(Screen):
         filtered_events = Event.filter(self.manager.store, filter_by)
         self.events = filtered_events
         self.update_screen_values()
-        for event in self.events:
-            print event
