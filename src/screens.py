@@ -73,7 +73,7 @@ class BasicScreen(Screen):
                 background_normal='',
                 background_color=rgb_to_kivy(239, 93, 5, 1),
                 size_hint_y=None,
-                height=100
+                height=130
             )
             handle_filter_button_with_dropdown = partial(self.handle_filter_button, dropdown)
             filter_button.bind(on_release=handle_filter_button_with_dropdown)
