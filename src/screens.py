@@ -24,7 +24,7 @@ class BasicScreen(Screen):
         evaluation_box = BoxLayout(orientation='horizontal')
         positive_button = Button(
             text="Positive",
-            font_size=30,
+            font_size=50,
             size_hint=(.5, .5),
             background_normal='',
             background_color=(0 / 255.0, 102 / 255.0, 0 / 255.0, 1)
@@ -33,7 +33,7 @@ class BasicScreen(Screen):
 
         negative_button = Button(
             text="Negative",
-            font_size=30,
+            font_size=50,
             size_hint=(.5, .5),
             background_normal='',
             background_color=(255 / 255.0, 0 / 255.0, 0 / 255.0, 1)
