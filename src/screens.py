@@ -49,7 +49,7 @@ class BasicScreen(Screen):
         return botton_box
 
     def _filter_layout(self):
-        filter_box = BoxLayout(orientation='vertical')
+        filter_box = BoxLayout(orientation='vertical', spacing=50)
         reset_button = Button(
             text="Reset",
             font_size=30,
@@ -72,7 +72,7 @@ class BasicScreen(Screen):
     def _menu_layout(self):
         menu_layout = RelativeLayout(
             size_hint=(None, None),
-            size=(300, 300),
+            size=(300, 600),
             pos_hint={'right': 1, 'top': 1},
         )
         menu_layout.add_widget(self._filter_layout())
@@ -82,11 +82,9 @@ class BasicScreen(Screen):
         top_box = BoxLayout(orientation='vertical')
 
         self.positive_label = Label(text="0%", font_size=150, color=[0, 0, 0, 1], size_hint=(1, 1))
-        # self.total_label = Label(font_size=30, color=[0, 0, 0, 1], size_hint=(1, 1))
 
         top_box.add_widget(self._menu_layout())
         top_box.add_widget(self.positive_label)
-        # top_box.add_widget(self.total_label)
         return top_box
 
     def _build_main_box(self):
