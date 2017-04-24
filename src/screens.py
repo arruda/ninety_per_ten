@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
+from functools import partial
 from datetime import datetime
 
 from kivy.uix.screenmanager import Screen
+from kivy.uix.dropdown import DropDown
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
 
 
 from kivy.uix.label import Label
 from kivy.uix.button import Button
-from npt_events import Event, EVALUATION_POSITIVE, EVALUATION_NEGATIVE, FILTERS
+from npt_events import Event, EVALUATION_POSITIVE, EVALUATION_NEGATIVE, FILTERS, ALL_FILTER
 
 
 class BasicScreen(Screen):
@@ -62,23 +64,37 @@ class BasicScreen(Screen):
         reset_button.bind(on_release=self.handle_reset_button)
         filter_box.add_widget(reset_button)
 
+        dropdown = DropDown()
         for filter_type in FILTERS.keys():
             filter_button = Button(
                 text=filter_type,
                 font_size=30,
-                size_hint=(1, 1),
                 background_normal='',
-                background_color=(239/255.0, 93/255.0, 5/255.0, 1)
+                background_color=(239/255.0, 93/255.0, 5/255.0, 1),
+                size_hint_y=None,
+                height=60
             )
-            filter_button.bind(on_release=self.handle_filter_button)
-            filter_box.add_widget(filter_button)
+            handle_filter_button_with_dropdown = partial(self.handle_filter_button, dropdown)
+            filter_button.bind(on_release=handle_filter_button_with_dropdown)
+            dropdown.add_widget(filter_button)
 
+        filter_dropdown_btn = Button(
+            text=ALL_FILTER,
+            font_size=30,
+            size_hint=(1, 1),
+            background_normal='',
+            background_color=(239/255.0, 93/255.0, 5/255.0, 1)
+        )
+        filter_dropdown_btn.bind(on_release=dropdown.open)
+
+        dropdown.bind(on_select=lambda instance, x: setattr(filter_dropdown_btn, 'text', x))
+        filter_box.add_widget(filter_dropdown_btn)
         return filter_box
 
     def _menu_layout(self):
         menu_layout = RelativeLayout(
             size_hint=(None, None),
-            size=(300, 600),
+            size=(300, 300),
             pos_hint={'right': 1, 'top': 1},
         )
         menu_layout.add_widget(self._filter_layout())
@@ -140,7 +156,8 @@ class BasicScreen(Screen):
             self.events = Event.reset_store(self.manager.store)
         self.update_screen_values()
 
-    def handle_filter_button(self, button):
+    def handle_filter_button(self, dropdown, button):
+        dropdown.select(button.text)
         filter_by = button.text
         filtered_events = Event.filter(self.manager.store, filter_by)
         self.events = filtered_events
