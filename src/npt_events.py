@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
 from dateutil.parser import parse as date_parse
+from collections import OrderedDict
 
 EVALUATION_POSITIVE = True
 EVALUATION_NEGATIVE = False
@@ -9,11 +10,12 @@ THIS_WEEK_FILTER = 'This Week'
 TODAY_FILTER = 'Today'
 ALL_FILTER = 'All'
 
-FILTERS = {
-    THIS_WEEK_FILTER: 'get_num_days_week',
-    TODAY_FILTER: 'get_num_days_today',
-    ALL_FILTER: ''
-}
+FILTERS = OrderedDict([
+    (TODAY_FILTER, 'get_num_days_today'),
+    (THIS_WEEK_FILTER, 'get_num_days_week'),
+    (ALL_FILTER, '')
+])
+
 
 
 class Event(object):
