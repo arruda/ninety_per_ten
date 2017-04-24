@@ -79,7 +79,7 @@ class BasicScreen(Screen):
                 background_normal='',
                 background_color=rgb_to_kivy(239, 93, 5, 1),
                 size_hint_y=None,
-                height=60
+                height=100
             )
             handle_filter_button_with_dropdown = partial(self.handle_filter_button, dropdown)
             filter_button.bind(on_release=handle_filter_button_with_dropdown)
@@ -102,7 +102,7 @@ class BasicScreen(Screen):
         menu_layout = RelativeLayout(
             size_hint=(None, None),
             size=(300, 300),
-            pos_hint={'right': 1, 'top': 1},
+            pos_hint={'left': 1, 'top': 1},
         )
         menu_layout.add_widget(self._filter_layout())
         return menu_layout
