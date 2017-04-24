@@ -69,7 +69,8 @@ class Event(object):
 
     @classmethod
     def get_num_days_week(cls):
-        return 7
+        today_week_number = datetime.today().weekday()
+        return today_week_number
 
     @classmethod
     def get_num_days_today(cls):
