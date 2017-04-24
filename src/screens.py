@@ -95,7 +95,7 @@ class BasicScreen(Screen):
     def _menu_layout(self):
         menu_layout = RelativeLayout(
             size_hint=(None, None),
-            size=(300, 300),
+            size=(300, 100),
             pos_hint={'left': 1, 'top': 1},
         )
         menu_layout.add_widget(self._filter_layout())
@@ -104,7 +104,7 @@ class BasicScreen(Screen):
     def _reset_layout(self):
         reset_layout = RelativeLayout(
             size_hint=(None, None),
-            size=(300, 300),
+            size=(100, 100),
             pos_hint={'right': 1, 'top': 1},
         )
         reset_button = Button(
