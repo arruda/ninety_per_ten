@@ -13,6 +13,13 @@ from kivy.uix.button import Button
 from npt_events import Event, EVALUATION_POSITIVE, EVALUATION_NEGATIVE, FILTERS, ALL_FILTER
 
 
+def rgb_to_kivy(*colors):
+    alfa = colors[-1]
+    rgb = [color / 255.0 for color in colors[:-1]]
+    rgb.append(alfa)
+    return rgb
+
+
 class BasicScreen(Screen):
 
     def __init__(self, **kwargs):
@@ -29,7 +36,7 @@ class BasicScreen(Screen):
             font_size=50,
             size_hint=(.5, .5),
             background_normal='',
-            background_color=(0 / 255.0, 102 / 255.0, 0 / 255.0, 1)
+            background_color=rgb_to_kivy(0, 102, 0, 1)
         )
         positive_button.bind(on_release=self.handle_positive_button)
 
@@ -38,7 +45,7 @@ class BasicScreen(Screen):
             font_size=50,
             size_hint=(.5, .5),
             background_normal='',
-            background_color=(255 / 255.0, 0 / 255.0, 0 / 255.0, 1)
+            background_color=rgb_to_kivy(255, 0, 0, 1)
         )
         negative_button.bind(on_release=self.handle_negative_button)
 
@@ -70,7 +77,7 @@ class BasicScreen(Screen):
                 text=filter_type,
                 font_size=30,
                 background_normal='',
-                background_color=(239/255.0, 93/255.0, 5/255.0, 1),
+                background_color=rgb_to_kivy(239, 93, 5, 1),
                 size_hint_y=None,
                 height=60
             )
@@ -83,7 +90,7 @@ class BasicScreen(Screen):
             font_size=30,
             size_hint=(1, 1),
             background_normal='',
-            background_color=(239/255.0, 93/255.0, 5/255.0, 1)
+            background_color=rgb_to_kivy(239, 93, 5, 1)
         )
         filter_dropdown_btn.bind(on_release=dropdown.open)
 
@@ -103,7 +110,7 @@ class BasicScreen(Screen):
     def _build_top_box(self):
         top_box = BoxLayout(orientation='vertical')
 
-        self.positive_label = Label(text="0%", font_size=150, color=[239/255.0, 93/255.0, 5/255.0, 1], size_hint=(1, 1))
+        self.positive_label = Label(text="0%", font_size=150, color=rgb_to_kivy(239, 93, 5, 1), size_hint=(1, 1))
 
         top_box.add_widget(self._menu_layout())
         top_box.add_widget(self.positive_label)
