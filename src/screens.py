@@ -63,6 +63,8 @@ class BasicScreen(Screen):
                 text=filter_type,
                 font_size=30,
                 size_hint=(1, 1),
+                background_normal='',
+                background_color=(255/255.0, 71/255.0, 26/255.0, 1)
             )
             filter_button.bind(on_release=self.handle_filter_button)
             filter_box.add_widget(filter_button)
@@ -81,7 +83,7 @@ class BasicScreen(Screen):
     def _build_top_box(self):
         top_box = BoxLayout(orientation='vertical')
 
-        self.positive_label = Label(text="0%", font_size=150, color=[0, 0, 0, 1], size_hint=(1, 1))
+        self.positive_label = Label(text="0%", font_size=150, color=[255/255.0, 71/255.0, 26/255.0, 1], size_hint=(1, 1))
 
         top_box.add_widget(self._menu_layout())
         top_box.add_widget(self.positive_label)
