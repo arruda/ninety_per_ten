@@ -6,6 +6,7 @@ from collections import OrderedDict
 EVALUATION_POSITIVE = True
 EVALUATION_NEGATIVE = False
 
+THIS_MONTH_FILTER = 'This Month'
 THIS_WEEK_FILTER = 'This Week'
 TODAY_FILTER = 'Today'
 ALL_FILTER = 'All'
@@ -13,6 +14,7 @@ ALL_FILTER = 'All'
 FILTERS = OrderedDict([
     (TODAY_FILTER, 'get_num_days_today'),
     (THIS_WEEK_FILTER, 'get_num_days_week'),
+    (THIS_MONTH_FILTER, 'get_num_days_month'),
     (ALL_FILTER, '')
 ])
 
@@ -73,6 +75,11 @@ class Event(object):
     def get_num_days_week(cls):
         today_week_number = datetime.today().weekday()
         return today_week_number
+
+    @classmethod
+    def get_num_days_month(cls):
+        today_month_day = datetime.today().day
+        return today_month_day - 1
 
     @classmethod
     def get_num_days_today(cls):
