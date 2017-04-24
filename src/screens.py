@@ -26,6 +26,8 @@ class BasicScreen(Screen):
             text="Positive",
             font_size=30,
             size_hint=(.5, .5),
+            background_normal='',
+            background_color=(0 / 255.0, 102 / 255.0, 0 / 255.0, 1)
         )
         positive_button.bind(on_release=self.handle_positive_button)
 
@@ -33,6 +35,8 @@ class BasicScreen(Screen):
             text="Negative",
             font_size=30,
             size_hint=(.5, .5),
+            background_normal='',
+            background_color=(255 / 255.0, 0 / 255.0, 0 / 255.0, 1)
         )
         negative_button.bind(on_release=self.handle_negative_button)
 
@@ -100,7 +104,7 @@ class BasicScreen(Screen):
             positive_perc = 100
         else:
             positive_perc = Event.get_rate(self.events)[0]
-        self.positive_label.text = "{0:.2f}%".format(positive_perc)
+        self.positive_label.text = "{:.2f}%".format(positive_perc)
 
     def update_total_label(self):
         self.total_label.text = "Total Entries: {}".format(len(self.events))
