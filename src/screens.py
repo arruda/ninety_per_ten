@@ -2,6 +2,7 @@
 from functools import partial
 from datetime import datetime
 
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.dropdown import DropDown
 from kivy.uix.boxlayout import BoxLayout
@@ -63,13 +64,6 @@ class BasicScreen(Screen):
 
     def _filter_layout(self):
         filter_box = BoxLayout(orientation='vertical', spacing=50)
-        reset_button = Button(
-            text="Reset",
-            font_size=30,
-            size_hint=(1, 1),
-        )
-        reset_button.bind(on_release=self.handle_reset_button)
-        filter_box.add_widget(reset_button)
 
         dropdown = DropDown()
         for filter_type in FILTERS.keys():
@@ -107,12 +101,34 @@ class BasicScreen(Screen):
         menu_layout.add_widget(self._filter_layout())
         return menu_layout
 
+    def _reset_layout(self):
+        reset_layout = RelativeLayout(
+            size_hint=(None, None),
+            size=(300, 300),
+            pos_hint={'right': 1, 'top': 1},
+        )
+        reset_button = Button(
+            text="Reset",
+            font_size=30,
+            size_hint=(1, 1),
+        )
+        reset_button.bind(on_release=self.handle_reset_button)
+        reset_layout.add_widget(reset_button)
+        return reset_layout
+
+    def _build_menu_and_reset(self):
+        menu_and_reset_box = FloatLayout()
+
+        menu_and_reset_box.add_widget(self._menu_layout())
+        menu_and_reset_box.add_widget(self._reset_layout())
+        return menu_and_reset_box
+
     def _build_top_box(self):
         top_box = BoxLayout(orientation='vertical')
 
         self.positive_label = Label(text="0%", font_size=150, color=rgb_to_kivy(239, 93, 5, 1), size_hint=(1, 1))
 
-        top_box.add_widget(self._menu_layout())
+        top_box.add_widget(self._build_menu_and_reset())
         top_box.add_widget(self.positive_label)
         return top_box
 
