@@ -100,7 +100,7 @@ class BasicScreen(Screen):
             positive_perc = 100
         else:
             positive_perc = Event.get_rate(self.events)[0]
-        self.positive_label.text = "{}%".format(positive_perc)
+        self.positive_label.text = "{0:.2f}%".format(positive_perc)
 
     def update_total_label(self):
         self.total_label.text = "Total Entries: {}".format(len(self.events))
