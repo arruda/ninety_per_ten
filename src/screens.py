@@ -22,12 +22,30 @@ def rgb_to_kivy(*colors):
 
 
 class BasicScreen(Screen):
-
     def __init__(self, **kwargs):
         super(BasicScreen, self).__init__(**kwargs)
         self.events = []
-        self.reset_count = 0
 
+    def on_pre_enter(self):
+        self.events = Event.get_events(self.manager.store)
+        self.update_screen_values()
+
+    def update_screen_values(self):
+        pass
+
+    def add_new_event(self, evaluation):
+        new_event = Event(date=datetime.now(), evaluation=evaluation)
+        new_event.save(self.manager.store)
+        self.events.append(
+            new_event
+        )
+
+
+class MainScreen(BasicScreen):
+
+    def __init__(self, **kwargs):
+        super(MainScreen, self).__init__(**kwargs)
+        self.reset_count = 0
         self.add_widget(self._build_main_box())
 
     def _build_evaluation_box(self):
@@ -148,10 +166,6 @@ class BasicScreen(Screen):
     def update_total_label(self):
         self.total_label.text = "Total Entries: {}".format(len(self.events))
 
-    def on_pre_enter(self):
-        self.events = Event.get_events(self.manager.store)
-        self.update_screen_values()
-
     def update_screen_values(self):
         self.update_positive_label()
         self.update_total_label()
@@ -163,13 +177,6 @@ class BasicScreen(Screen):
     def handle_negative_button(self, button):
         self.add_new_event(EVALUATION_NEGATIVE)
         self.update_screen_values()
-
-    def add_new_event(self, evaluation):
-        new_event = Event(date=datetime.now(), evaluation=evaluation)
-        new_event.save(self.manager.store)
-        self.events.append(
-            new_event
-        )
 
     def handle_reset_button(self, button):
         if self.reset_count < 7:
@@ -185,3 +192,10 @@ class BasicScreen(Screen):
         filtered_events = Event.filter(self.manager.store, filter_by)
         self.events = filtered_events
         self.update_screen_values()
+
+
+class HistoryScreen(BasicScreen):
+
+    def __init__(self, **kwargs):
+        super(HistoryScreen, self).__init__(**kwargs)
+        self.events = []
