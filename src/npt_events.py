@@ -19,7 +19,6 @@ FILTERS = OrderedDict([
 ])
 
 
-
 class Event(object):
     """An event"""
     def __init__(self, date, evaluation=EVALUATION_POSITIVE):
