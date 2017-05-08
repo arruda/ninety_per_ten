@@ -28,7 +28,8 @@ class Event(object):
         self.evaluation = evaluation
 
     def __unicode__(self):
-        return "{}: {}".format(self.iso_date, self.evaluation)
+        eval_text = 'Positive' if self.evaluation else 'Negative'
+        return "{}: {}".format(self.iso_date, eval_text)
 
     def __str__(self):
         return self.__unicode__()
@@ -101,3 +102,7 @@ class Event(object):
             if delta.days <= num_days and delta.days >= 0:
                 filtered_events.append(event)
         return filtered_events
+
+    @classmethod
+    def remove_event(cls, store, event):
+        return store.delete(event.iso_date)

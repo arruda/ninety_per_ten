@@ -206,16 +206,14 @@ class HistoryScreen(BasicScreen):
     def load_events(self):
         events = Event.get_events(self.manager.store)
         events.sort(key=lambda x: x.date, reverse=True)
-        return events[-7:]
+        return events[:7]
 
     def _build_main_box(self):
         main_box = BoxLayout(orientation='vertical')
         back_button = Button(
             text="Back",
-            font_size=50,
-            size_hint=(0.25, 0.25),
-            background_normal='',
-            background_color=rgb_to_kivy(0, 102, 0, 1)
+            font_size=30,
+            size_hint=(0.15, 0.15),
         )
         back_button.bind(on_release=self.handle_back_button)
         main_box.add_widget(back_button)
@@ -223,19 +221,44 @@ class HistoryScreen(BasicScreen):
         return main_box
 
     def _build_event_list(self):
-        self.event_list_layout = BoxLayout(orientation='vertical')
+        self.event_list_layout = BoxLayout(orientation='vertical', spacing=30)
         self.update_event_list()
         return self.event_list_layout
 
     def handle_back_button(self, button):
         self.manager.current = MAIN_SCREEN_NAME
 
+    def _build_detail_event_box(self, event):
+        event_layout = BoxLayout(orientation='horizontal')
+        label_color = rgb_to_kivy(0, 102, 0, 1) if event.evaluation else rgb_to_kivy(255, 0, 0, 1)
+        # event_eval_text = 'Positive' if event.evaluation else 'Negative'
+        # event_text = "{} [{}]".format(event.date.strftime("%d/%m/%y  %H:%M:%S"), event_eval_text)
+        event_text = event.date.strftime("%d/%m/%y  %H:%M:%S")
+        event_label = Label(text=event_text, font_size=70, color=label_color, size_hint=(1, 1))
+
+        event_rm_button = Button(
+            text="-",
+            font_size=50,
+            size_hint=(.15, 1),
+            background_normal='',
+            background_color=rgb_to_kivy(255, 0, 0, 1)
+        )
+        handle_rm_with_event = partial(self.handle_rm_event, event)
+        event_rm_button.bind(on_release=handle_rm_with_event)
+
+        event_layout.add_widget(event_label)
+        event_layout.add_widget(event_rm_button)
+        return event_layout
+
     def update_event_list(self):
         self.event_list_layout.clear_widgets()
-
         for event in self.events:
-            event_label = Label(text=str(event), font_size=100, color=rgb_to_kivy(239, 93, 5, 1), size_hint=(1, 1))
-            self.event_list_layout.add_widget(event_label)
+            self.event_list_layout.add_widget(self._build_detail_event_box(event))
 
     def update_screen_values(self):
+        self.events = self.load_events()
         self.update_event_list()
+
+    def handle_rm_event(self, event, button):
+        Event.remove_event(self.manager.store, event)
+        self.update_screen_values()
