@@ -33,6 +33,9 @@ class Event(object):
     def __str__(self):
         return self.__unicode__()
 
+    def __repr__(self):
+        return self.__unicode__()
+
     def save(self, store):
         print "saving %s" % unicode(self)
         store.put(self.iso_date, evaluation=self.evaluation)
