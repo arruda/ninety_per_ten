@@ -5,7 +5,7 @@ from kivy.core.window import Window
 from kivy.storage.jsonstore import JsonStore
 from kivy.uix.screenmanager import ScreenManager
 
-from screens import MainScreen
+from screens import MainScreen, HistoryScreen, MAIN_SCREEN_NAME, HISTORY_SCREEN_NAME
 
 Window.clearcolor = (1, 1, 1, 1)
 
@@ -30,9 +30,13 @@ class NinetyPerTenApp(App):
         self.store = JsonStore(os.path.join(self.user_data_dir, 'ninetyperten.json'))
         sm = NinetyPerTenScreenManager(self.store)
         main_screen = MainScreen(
-            name='Main Screen',
+            name=MAIN_SCREEN_NAME,
+        )
+        hist_screen = HistoryScreen(
+            name=HISTORY_SCREEN_NAME
         )
         sm.add_widget(main_screen)
+        sm.add_widget(hist_screen)
         return sm
 
     def on_pause(self):

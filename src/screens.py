@@ -14,6 +14,10 @@ from kivy.uix.button import Button
 from npt_events import Event, EVALUATION_POSITIVE, EVALUATION_NEGATIVE, FILTERS, ALL_FILTER
 
 
+HISTORY_SCREEN_NAME = 'History Screen'
+MAIN_SCREEN_NAME = 'Main Screen'
+
+
 def rgb_to_kivy(*colors):
     alfa = colors[-1]
     rgb = [color / 255.0 for color in colors[:-1]]
@@ -26,8 +30,11 @@ class BasicScreen(Screen):
         super(BasicScreen, self).__init__(**kwargs)
         self.events = []
 
+    def load_events(self):
+        return Event.get_events(self.manager.store)
+
     def on_pre_enter(self):
-        self.events = Event.get_events(self.manager.store)
+        self.events = self.load_events()
         self.update_screen_values()
 
     def update_screen_values(self):
@@ -125,13 +132,13 @@ class MainScreen(BasicScreen):
             size=(100, 100),
             pos_hint={'right': 1, 'top': 1},
         )
-        reset_button = Button(
-            text="Reset",
+        history_button = Button(
+            text="History",
             font_size=30,
             size_hint=(1, 1),
         )
-        reset_button.bind(on_release=self.handle_reset_button)
-        reset_layout.add_widget(reset_button)
+        history_button.bind(on_release=self.handle_history_button)
+        reset_layout.add_widget(history_button)
         return reset_layout
 
     def _build_menu_and_reset(self):
@@ -178,13 +185,8 @@ class MainScreen(BasicScreen):
         self.add_new_event(EVALUATION_NEGATIVE)
         self.update_screen_values()
 
-    def handle_reset_button(self, button):
-        if self.reset_count < 7:
-            self.reset_count += 1
-        else:
-            self.reset_count = 0
-            self.events = Event.reset_store(self.manager.store)
-        self.update_screen_values()
+    def handle_history_button(self, button):
+        self.manager.current = HISTORY_SCREEN_NAME
 
     def handle_filter_button(self, dropdown, button):
         dropdown.select(button.text)
@@ -199,3 +201,41 @@ class HistoryScreen(BasicScreen):
     def __init__(self, **kwargs):
         super(HistoryScreen, self).__init__(**kwargs)
         self.events = []
+        self.add_widget(self._build_main_box())
+
+    def load_events(self):
+        events = Event.get_events(self.manager.store)
+        events.sort(key=lambda x: x.date, reverse=True)
+        return events[-7:]
+
+    def _build_main_box(self):
+        main_box = BoxLayout(orientation='vertical')
+        back_button = Button(
+            text="Back",
+            font_size=50,
+            size_hint=(0.25, 0.25),
+            background_normal='',
+            background_color=rgb_to_kivy(0, 102, 0, 1)
+        )
+        back_button.bind(on_release=self.handle_back_button)
+        main_box.add_widget(back_button)
+        main_box.add_widget(self._build_event_list())
+        return main_box
+
+    def _build_event_list(self):
+        self.event_list_layout = BoxLayout(orientation='vertical')
+        self.update_event_list()
+        return self.event_list_layout
+
+    def handle_back_button(self, button):
+        self.manager.current = MAIN_SCREEN_NAME
+
+    def update_event_list(self):
+        self.event_list_layout.clear_widgets()
+
+        for event in self.events:
+            event_label = Label(text=str(event), font_size=100, color=rgb_to_kivy(239, 93, 5, 1), size_hint=(1, 1))
+            self.event_list_layout.add_widget(event_label)
+
+    def update_screen_values(self):
+        self.update_event_list()
