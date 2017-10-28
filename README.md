@@ -1,5 +1,5 @@
 # Ninety Per Ten
-Project requested by @annanda to help keep track of her food habits.
+Project requested by [@annanda](https://github.com/annanda) to help keep track of her food habits.
 
 # Install
 You need to have pipenv installed. To install run (outside of any virtual environment)
