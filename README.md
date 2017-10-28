@@ -27,7 +27,7 @@ $ pipenv install
 **PS:** Might be necessary to start adb server as root before, e.g.:
 
 ```shell
-$ sudo /home/myuser/.buildozer/android/platform/android-sdk-20/platform-tools/adb start-server
+$ sudo /home/$USER/.buildozer/android/platform/android-sdk-20/platform-tools/adb start-server
 ```
 Run:
 
