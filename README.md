@@ -2,12 +2,17 @@
 Project requested by @annanda to help keep track of her food habits.
 
 # Install
-Prepare venv:
+You need to have pipenv installed. To install run (outside of any virtual environment)
+```
+pip install pipenv
+```
+
+Prepare venv (only Python 2 is supported):
 ```shell
 $ pipenv --two
 ```
 
-Cython has to be installed before everything, or else installation will break.
+Cython has to be installed before any other requirement, or else installation will break.
 
 ```shell
 $ pipenv install Cython==0.25.2
