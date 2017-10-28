@@ -1,3 +1,5 @@
 buildozer==0.32
 Kivy==1.9.1
 python-dateutil==2.6.0
+Pillow==4.3.0
+pygame==1.9.3
