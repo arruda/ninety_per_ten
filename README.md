@@ -23,17 +23,26 @@ Then, install everything:
 $ pipenv install
 ```
 
+You can verify if Buildozer is really installed inside the virtualenv, running:
+```
+pipenv run pip freeze
+```
+
+# You need to put your android device in developer mode and USB debugging mode (google it to know how to do it).
+
 # Building app
-**PS:** Might be necessary to start adb server as root before, e.g.:
+**PS:** Might be necessary to start adb server as root before, BUT it not be necessary!! Don't try this step if you didn't face this error.
 
 ```shell
-$ sudo /home/myuser/.buildozer/android/platform/android-sdk-20/platform-tools/adb start-server
+$ sudo /home/$USER/.buildozer/android/platform/android-sdk-20/platform-tools/adb start-server
 ```
 Run:
 
 ```shell
 $ buildozer android debug deploy
 ```
+
+One dialog window will appear in you android device, you need to accept it.
 
 # Publishing
 Run:
