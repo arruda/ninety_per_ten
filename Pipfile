@@ -1,13 +1,19 @@
 [[source]]
+
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 
+
 [dev-packages]
+
 ipython = "*"
 ipdb = "*"
 
+
 [packages]
+
 Cython = "==0.25.2"
-Kivy = "==1.9.1"
 buildozer = "==0.32"
 python-dateutil = "*"
+Pillow = "4.3.0"
+Pygame = "1.9.3"
